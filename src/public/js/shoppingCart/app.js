@@ -22,8 +22,10 @@ function updateCartInfo() {
   let cartInfo = findCartInfo();
   cartCountInfo.textContent = cartInfo.productCount;
   cartTotalValue.textContent = `${cartInfo.total}$`;
-  cartTotalValueCartSection.textContent = `${cartInfo.total}$`;
-  cartTotalValueCartSectionTotal.textContent = `${cartInfo.total}$`;
+  // cartTotalValueCartSection.textContent = `${cartInfo.total}$`;
+  cartTotalValueCartSectionTotal === null
+    ? console.log("No estas en cart section")
+    : (cartTotalValueCartSectionTotal.textContent = `${cartInfo.total}$`);
   countItems.textContent = `${cartInfo.productCount} Item`;
   //  cartTotalValue2.textContent = cartInfo.total;
   productsInCart = JSON.parse(localStorage.getItem("products"));
@@ -169,7 +171,9 @@ function findCartInfo() {
 }
 
 cartContainer.addEventListener("click", deleteProduct);
-cartContainerCart.addEventListener("click", deleteProductCartSection);
+cartContainerCart === null
+  ? console.log("No existe el container cart")
+  : cartContainerCart.addEventListener("click", deleteProductCartSection);
 function deleteProduct(e) {
   let cartItem;
   if (e.target.classList.contains("remove")) {

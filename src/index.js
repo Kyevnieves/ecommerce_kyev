@@ -7,9 +7,11 @@ const { database } = require("./keys");
 const path = require("path");
 const MySQLStore = require("express-mysql-session");
 const passport = require("passport");
+
 // INICIALIZACIONES
 const app = express();
 require("./lib/passport");
+require("./public/js/cloudinary");
 // CONFIGURACIONES
 app.set("port", 4000);
 app.set("views", path.join(__dirname, "views"));
