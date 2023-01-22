@@ -1,5 +1,5 @@
 const pool = require("../database");
-const { cloud, cloudinary } = require("../public/js/cloudinary");
+const { cloud, cloudinary } = require("../lib/cloudinary");
 const buscarPorTitulo = async (title) => {
   // CONVERSION PARA REALIZAR QUERY CORRECTAMENTE
   title = `%${title}%`;
@@ -20,13 +20,39 @@ const buscarPorTituloYCategoria = async (title, category) => {
     [category, title]
   );
 };
+const buscarPorPrecio = async (price) => {
+  return await pool.query(`SELECT * FROM productos WHERE price <= ${price}`);
+};
+const buscarPorCategoriaYPrecio = async (category, price) => {
+  return await pool.query(
+    `SELECT * FROM productos WHERE price <= ${price} && category = "${category}" `
+  );
+};
+const priceMinpriceMax = async (pricemin, pricemax) => {
+  return await pool.query(
+    `SELECT * FROM productos WHERE price BETWEEN ${pricemin} AND ${pricemax}`
+  );
+};
 const shop = async (req, res, next) => {
   // OBTENER CATEGORIAS DE PRODUCTOS
-  let categorys = await pool.query("SELECT DISTINCT category FROM productos");
-  let category = req.query.category;
-  let title = req.query.title;
-  // OBTENER TODOS LOS PRODUCTOS
+  // let categorys = await pool.query("SELECT DISTINCT category FROM productos");
+  let { price, category, title, pricemin, pricemax } = req.query;
+  console.log(pricemin, pricemax);
+  // OBTENER LOS PRIMEROS 10 PRODUCTOS
   let product = await pool.query(`SELECT * FROM productos WHERE id <=10`);
+  let countCategorys = await pool.query(
+    "SELECT category, COUNT(*) FROM productos GROUP BY category;"
+  );
+  const categorys = [];
+  const result = countCategorys.forEach((element) => {
+    categorys.push(
+      JSON.parse(JSON.stringify(element).replace("COUNT(*)", "Cantidad"))
+    );
+  });
+  // OBTENER PRODUCTOS EN BASE A PRECIO MIN Y PRECIO MAX
+  pricemin !== undefined && pricemax !== undefined
+    ? (product = await priceMinpriceMax(pricemin, pricemax))
+    : next;
   // OBTENER PRODUCTOS EN BASE A CATEGORIA Y TITULO EN QUERY
   category !== undefined && title !== undefined
     ? (product = await buscarPorTituloYCategoria(title, category))
@@ -37,7 +63,12 @@ const shop = async (req, res, next) => {
     : next;
   // OBTENER PRODUCTOS EN BASE A TITULO EN QUERY
   title !== undefined ? (product = await buscarPorTitulo(title)) : next;
-  res.render("shop", { product, categorys, title });
+  // OBTENER PRODUCTOS EN BASE A CATEGORIA Y PRECIO EN QUERY
+  price !== undefined ? (product = await buscarPorPrecio(price)) : next;
+  price !== undefined && category !== undefined
+    ? (product = await buscarPorCategoriaYPrecio(category, price))
+    : next;
+  res.render("shop", { product, categorys, title, price });
 };
 
 const shopPage2 = async (req, res) => {

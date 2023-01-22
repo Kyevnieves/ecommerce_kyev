@@ -11,7 +11,7 @@ const passport = require("passport");
 // INICIALIZACIONES
 const app = express();
 require("./lib/passport");
-require("./public/js/cloudinary");
+require("./lib/cloudinary");
 // CONFIGURACIONES
 app.set("port", 4000);
 app.set("views", path.join(__dirname, "views"));

@@ -37,7 +37,7 @@
                         <ul class="list">
                             {{#each categorys}}
                             <li>
-                                <a href="/shop?category={{category}}">{{category}}</a><span>(1138)</span>
+                                <a href="/shop?category={{category}}">{{category}}</a><span class="count">({{Cantidad}})</span>
                             </li>
                             {{else}}
                             {{/each}}
@@ -47,11 +47,20 @@
 
                     <div class="single-widget range">
                         <h3>Price Range</h3>
-                        <input type="range" class="form-range" name="range" step="1" min="100" max="10000" value="10"
+                        {{#if price}}
+                        <input type="range" class="form-range" name="range" step="5" min="1" max="1000" value="{{price}}"
                             onchange="rangePrimary.value=value">
+                        {{else}}
+                        <input type="range" class="form-range" name="range" step="5" min="1" max="1000" value="10"
+                            onchange="rangePrimary.value=value">
+                        {{/if}}
                         <div class="range-inner">
                             <label>$</label>
-                            <input type="text" id="rangePrimary" placeholder="100">
+                            {{#if price}}
+                            <input type="text" id="rangePrimary" placeholder="{{price}}">
+                            {{else}}
+                            <input type="text" id="rangePrimary" placeholder="1">
+                            {{/if}}
                         </div>
                     </div>
 
@@ -59,28 +68,27 @@
                     <div class="single-widget condition">
                         <h3>Filter by Price</h3>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
-                            <label class="form-check-label" for="flexCheckDefault1">
+                            <a href="/shop?pricemin=50&pricemax=100" class="text-secondary"><label class="form-check-label" for="flexCheckDefault1">
                                 $50 - $100L (208)
-                            </label>
+                            </label></a>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+                            <a class="text-secondary" href="/shop?pricemin=100&pricemax=500">
                             <label class="form-check-label" for="flexCheckDefault2">
-                                $100L - $500 (311)
-                            </label>
+                                $100 - $500 (311)
+                            </label></a>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3">
-                            <label class="form-check-label" for="flexCheckDefault3">
-                                $500 - $1,000 (485)
-                            </label>
+                            <a class="text-secondary" href="/shop?pricemin=500&pricemax=1000">
+                            <label class="form-check-label" for="flexCheckDefault2">
+                                $500 - $1000 (311)
+                            </label></a>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault4">
-                            <label class="form-check-label" for="flexCheckDefault4">
-                                $1,000 - $5,000 (213)
-                            </label>
+                            <a class="text-secondary" href="/shop?pricemin=1000&pricemax=5000">
+                            <label class="form-check-label" for="flexCheckDefault2">
+                                $1000 - $5000 (311)
+                            </label></a>
                         </div>
                     </div>
 
@@ -197,212 +205,7 @@
                         </div>
                         <div class="tab-pane fade" id="nav-list" role="tabpanel" aria-labelledby="nav-list-tab">
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-12">
-
-                                    <div class="single-product">
-                                        <div class="row align-items-center">
-                                            <div class="col-lg-4 col-md-4 col-12">
-                                                <div class="product-image">
-                                                    <img data-pagespeed-high-res-src="https://demo.graygrids.com/themes/shopgrids/assets/images/products/xproduct-1.jpg.pagespeed.ic.hrhh8W8XuW.webp"
-                                                        alt="#" data-pagespeed-url-hash="2548583845"
-                                                        src="https://demo.graygrids.com/themes/shopgrids/assets/images/products/xproduct-1.jpg.pagespeed.ic.hrhh8W8XuW.webp"
-                                                        onload="pagespeed.switchToHighResAndMaybeBeacon(this);"
-                                                        onerror="this.onerror=null;pagespeed.switchToHighResAndMaybeBeacon(this);">
-                                                    <div class="button">
-                                                        <a href="product-details.html" class="btn"><i
-                                                                class="lni lni-cart"></i> Add to
-                                                            Cart</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8 col-12">
-                                                <div class="product-info">
-                                                    <span class="category">Watches</span>
-                                                    <h4 class="title">
-                                                        <a href="product-grids.html">Xiaomi Mi Band 5</a>
-                                                    </h4>
-                                                    <ul class="review">
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star"></i></li>
-                                                        <li><span>4.0 Review(s)</span></li>
-                                                    </ul>
-                                                    <div class="price">
-                                                        <span>$199.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-12">
-
-                                    <div class="single-product">
-                                        <div class="row align-items-center">
-                                            <div class="col-lg-4 col-md-4 col-12">
-                                                <div class="product-image">
-                                                    <img data-pagespeed-high-res-src="assets/images/products/xproduct-2.jpg.pagespeed.ic.a9zQzFgLCS.webp"
-                                                        alt="#" data-pagespeed-url-hash="2843083766"
-                                                        src="https://demo.graygrids.com/themes/shopgrids/assets/images/products/xproduct-1.jpg.pagespeed.ic.hrhh8W8XuW.webp"
-                                                        onload="pagespeed.switchToHighResAndMaybeBeacon(this);"
-                                                        onerror="this.onerror=null;pagespeed.switchToHighResAndMaybeBeacon(this);">
-                                                    <span class="sale-tag">-25%</span>
-                                                    <div class="button">
-                                                        <a href="product-details.html" class="btn"><i
-                                                                class="lni lni-cart"></i> Add to
-                                                            Cart</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8 col-12">
-                                                <div class="product-info">
-                                                    <span class="category">Speaker</span>
-                                                    <h4 class="title">
-                                                        <a href="product-grids.html">Big Power Sound Speaker</a>
-                                                    </h4>
-                                                    <ul class="review">
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><span>5.0 Review(s)</span></li>
-                                                    </ul>
-                                                    <div class="price">
-                                                        <span>$275.00</span>
-                                                        <span class="discount-price">$300.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-12">
-
-                                    <div class="single-product">
-                                        <div class="row align-items-center">
-                                            <div class="col-lg-4 col-md-4 col-12">
-                                                <div class="product-image">
-                                                    <img data-pagespeed-high-res-src="https://demo.graygrids.com/themes/shopgrids/assets/images/products/xproduct-1.jpg.pagespeed.ic.hrhh8W8XuW.webp"
-                                                        alt="#" data-pagespeed-url-hash="3137583687"
-                                                        src="https://demo.graygrids.com/themes/shopgrids/assets/images/products/xproduct-1.jpg.pagespeed.ic.hrhh8W8XuW.webp"
-                                                        onload="pagespeed.switchToHighResAndMaybeBeacon(this);"
-                                                        onerror="this.onerror=null;pagespeed.switchToHighResAndMaybeBeacon(this);">
-                                                    <div class="button">
-                                                        <a href="product-details.html" class="btn"><i
-                                                                class="lni lni-cart"></i> Add to
-                                                            Cart</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8 col-12">
-                                                <div class="product-info">
-                                                    <span class="category">Camera</span>
-                                                    <h4 class="title">
-                                                        <a href="product-grids.html">WiFi Security Camera</a>
-                                                    </h4>
-                                                    <ul class="review">
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><span>5.0 Review(s)</span></li>
-                                                    </ul>
-                                                    <div class="price">
-                                                        <span>$399.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-12">
-
-                                    <div class="single-product">
-                                        <div class="row align-items-center">
-                                            <div class="col-lg-4 col-md-4 col-12">
-                                                <div class="product-image">
-                                                    <img alt="#" data-pagespeed-url-hash="3432083608"
-                                                        src="https://demo.graygrids.com/themes/shopgrids/assets/images/products/xproduct-1.jpg.pagespeed.ic.hrhh8W8XuW.webp"
-                                                        onerror="this.onerror=null;pagespeed.lazyLoadImages.loadIfVisibleAndMaybeBeacon(this);">
-                                                    <span class="new-tag">New</span>
-                                                    <div class="button">
-                                                        <a href="product-details.html" class="btn"><i
-                                                                class="lni lni-cart"></i> Add to
-                                                            Cart</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8 col-12">
-                                                <div class="product-info">
-                                                    <span class="category">Phones</span>
-                                                    <h4 class="title">
-                                                        <a href="product-grids.html">iphone 6x plus</a>
-                                                    </h4>
-                                                    <ul class="review">
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><span>5.0 Review(s)</span></li>
-                                                    </ul>
-                                                    <div class="price">
-                                                        <span>$400.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-12">
-
-                                    <div class="single-product">
-                                        <div class="row align-items-center">
-                                            <div class="col-lg-4 col-md-4 col-12">
-                                                <div class="product-image">
-                                                    <img alt="#" data-pagespeed-url-hash="20616075"
-                                                        src="https://demo.graygrids.com/themes/shopgrids/assets/images/products/xproduct-1.jpg.pagespeed.ic.hrhh8W8XuW.webp"
-                                                        onerror="this.onerror=null;pagespeed.lazyLoadImages.loadIfVisibleAndMaybeBeacon(this);">
-                                                    <span class="sale-tag">-50%</span>
-                                                    <div class="button">
-                                                        <a href="product-details.html" class="btn"><i
-                                                                class="lni lni-cart"></i> Add to
-                                                            Cart</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8 col-md-8 col-12">
-                                                <div class="product-info">
-                                                    <span class="category">Headphones</span>
-                                                    <h4 class="title">
-                                                        <a href="product-grids.html">PX7 Wireless Headphones</a>
-                                                    </h4>
-                                                    <ul class="review">
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star-filled"></i></li>
-                                                        <li><i class="lni lni-star"></i></li>
-                                                        <li><span>4.0 Review(s)</span></li>
-                                                    </ul>
-                                                    <div class="price">
-                                                        <span>$100.00</span>
-                                                        <span class="discount-price">$200.00</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                                {{>product-list}}
                             </div>
                             <div class="row">
                                 <div class="col-12">
