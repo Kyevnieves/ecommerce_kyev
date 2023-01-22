@@ -46,7 +46,7 @@ const shop = async (req, res, next) => {
   const categorys = [];
   const result = countCategorys.forEach((element) => {
     categorys.push(
-      JSON.parse(JSON.stringify(element).replace("COUNT(*)", "Cantidad"))
+      JSON.parse(JSON.stringify(element).replace("count(*)", "Cantidad"))
     );
   });
   // OBTENER PRODUCTOS EN BASE A PRECIO MIN Y PRECIO MAX
