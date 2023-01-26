@@ -60,10 +60,19 @@ input === null
 const inputRange = document.querySelector(".form-range");
 inputRange.addEventListener("change", (e) => {
   let valorBuscado = e.target.value;
-  if (window.location.href.includes("price")) {
+  if (
+    window.location.href.includes("category") &&
+    window.location.href.includes("price")
+  ) {
+    window.location.href =
+      window.location.origin + `/shop?price=${valorBuscado}`;
+  } else if (window.location.href.includes("category")) {
+    window.location.href = window.location.href + `&price=${valorBuscado}`;
+  } else if (window.location.href.includes("price")) {
     window.location.href =
       window.location.origin + `/shop?price=${valorBuscado}`;
   } else {
-    window.location.href = window.location.href + `&price=${valorBuscado}`;
+    window.location.href =
+      window.location.origin + `/shop?price=${valorBuscado}`;
   }
 });

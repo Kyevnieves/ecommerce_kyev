@@ -46,3 +46,4 @@ ALTER TABLE productos
 
 ALTER TABLE `productos` ADD `image2` VARCHAR(250) NULL AFTER `image`;
 ALTER TABLE `productos` ADD `image3` VARCHAR(150) NULL AFTER `image2`, ADD `image4` VARCHAR(150) NULL AFTER `image3`, ADD `image5` VARCHAR(150) NULL AFTER `image4`;
+ALTER TABLE `productos` ADD `trending` BOOLEAN NULL AFTER `category`;

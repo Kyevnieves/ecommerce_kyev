@@ -14,9 +14,6 @@ module.exports = {
     user: DB_USER,
     password: DB_PASSWORD,
     database: DB_DATABASE,
-    ssl: {
-      rejectUnauthorized: true,
-      }
   },
 };
 

@@ -1,5 +1,6 @@
 const pool = require("../database");
 const { cloud, cloudinary } = require("../lib/cloudinary");
+const { v4: uuidv4 } = require("uuid");
 const buscarPorTitulo = async (title) => {
   // CONVERSION PARA REALIZAR QUERY CORRECTAMENTE
   title = `%${title}%`;
@@ -46,7 +47,7 @@ const shop = async (req, res, next) => {
   const categorys = [];
   const result = countCategorys.forEach((element) => {
     categorys.push(
-      JSON.parse(JSON.stringify(element).replace("COUNT(*)", "Cantidad"))
+      JSON.parse(JSON.stringify(element).replace("count(*)", "Cantidad"))
     );
   });
   // OBTENER PRODUCTOS EN BASE A PRECIO MIN Y PRECIO MAX
@@ -99,9 +100,10 @@ const viewAgregarProducto = async (req, res) => {
 const agregarProductoBD = async (req, res) => {
   const { title, price, description, category } = req.body;
   const filePath = req.file.path;
+  const fileNameCloudinary = title.replace(/ /g, "_");
   const urlImg = await cloudinary.v2.uploader.upload(
     filePath,
-    { public_id: "cloudinary" },
+    { public_id: fileNameCloudinary },
     function (error, result) {
       return result;
     }
@@ -115,7 +117,9 @@ const agregarProductoBD = async (req, res) => {
     category,
   };
   const product = await pool.query("INSERT INTO productos set ?", [newProduct]);
-  res.send("Producto creado exitosamente");
+  const idProduct = product.insertId;
+  req.flash("success", "Producto creado exitosamente");
+  res.redirect(`/products/edit/${idProduct}`);
 };
 const viewEditarProducto = async (req, res) => {
   let { id } = req.params;
@@ -143,7 +147,14 @@ const editarProductoBD = async (req, res, next) => {
     "UPDATE productos SET title = IFNULL(?, title), price = IFNULL(?, price), description = IFNULL(?, description), category = IFNULL(?, category), image = IFNULL(?, image) WHERE id = ?",
     [title, price, description, category, image, id]
   );
-  res.send("Producto actualizado");
+  req.flash("success", "Producto actualizado");
+  res.redirect(`/products/edit/${id}`);
+};
+const eliminarProducto = async (req, res) => {
+  const { id } = req.params;
+  await pool.query("DELETE FROM productos WHERE ID = ?", [id]);
+  req.flash("success", "Producto actualizado");
+  res.redirect("/shop");
 };
 module.exports = {
   carrito,
@@ -155,4 +166,5 @@ module.exports = {
   agregarProductoBD,
   viewEditarProducto,
   editarProductoBD,
+  eliminarProducto,
 };

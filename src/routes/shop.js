@@ -13,6 +13,7 @@ const {
   agregarProductoBD,
   viewEditarProducto,
   editarProductoBD,
+  eliminarProducto,
 } = require("../controllers/shop_controllers");
 
 router.get("/cart", carrito);
@@ -25,4 +26,5 @@ router.get("/products/edit/:id", viewEditarProducto);
 // RUTAS POST
 router.post("/products/add", upload, agregarProductoBD);
 router.post("/products/edit/:id", upload, editarProductoBD);
+router.get("/products/delete/:id", eliminarProducto);
 module.exports = router;

@@ -13043,3 +13043,8 @@ blockquote span {
         top: 14px;
         right: 10px;
 }
+.contenedorNotificacion{
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+}

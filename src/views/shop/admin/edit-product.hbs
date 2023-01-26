@@ -18,23 +18,23 @@
     </div>
 </div>
 <!-- End Breadcrumbs -->
-
 <!-- Start Item Details -->
+{{>message}}
 {{#each product}}
 <section class="item-details section">
     <div class="container">
         <form action="" method="post" enctype="multipart/form-data">
         <div class="top-area">
             <div class="row align-items-center">
-                <div class="col-lg-6 col-md-12 col-12">
+                <div class="col-lg-5 col-md-12 col-12">
                     <div class="product-images">
                         <main id="gallery">
                             <div class="main-img">
-                                <img src="{{image}}" id="current" alt="#" style="aspect-ratio:1;" class="imgPreview">
+                                <img src="{{image}}" id="current" alt="#" class="imgPreview">
                                 <input type="file" name="image" id="" placeholder="Enlace de la imagen" class="p-2 mb-2">
                                 </div>
                             <div class="images">
-                                <img src="/images/products/prod_default.png" class="img gallery-img" alt="#">
+                                <img src="{{image}}" class="img gallery-img" alt="#">
                                 <img src="/images/products/prod_default.png" class="img gallery-img" alt="#">
                                 <img src="/images/products/prod_default.png" class="img gallery-img" alt="#">
                                 <img src="/images/products/prod_default.png" class="img gallery-img" alt="#">
@@ -45,10 +45,14 @@
                 </div>
                 <div class="col-lg-6 col-md-12 col-12">
                     <div class="product-info d-flex flex-column">
+                        <h4 class="mb-2">Nombre producto</h4>
                         <input type="text" name="title" id="" placeholder="Nombre producto" class="p-2 mb-2" value="{{title}}">
+                        <h4 class="mb-2">Categoria</h4>
                         <input type="text" name="category" id="" placeholder="Categoria" class="p-2 mb-2" value="{{category}}">
+                        <h4 class="mb-2">Precio</h4>
                         <input type="text" name="price" id="" placeholder="Precio" class="p-2 mb-2" value="{{price}}">
-                        <input type="text" name="description" id="" placeholder="Descripcion del producto" class="p-4 mb-2" value="{{description}}">
+                        <h4 class="mb-2">Descripcion</h4>
+                        <textarea type="text" name="description" id="" placeholder="Descripcion del producto" class="p-4 mb-2">{{description}}</textarea>
                         <div class="bottom-content">
                             <div class="row align-items-end">
                                 <div class="col-lg-4 col-md-4 col-12">

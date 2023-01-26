@@ -49,10 +49,10 @@
                         <h3>Price Range</h3>
                         {{#if price}}
                         <input type="range" class="form-range" name="range" step="5" min="1" max="1000" value="{{price}}"
-                            onchange="rangePrimary.value=value">
+                            oninput="rangePrimary.value=value">
                         {{else}}
                         <input type="range" class="form-range" name="range" step="5" min="1" max="1000" value="10"
-                            onchange="rangePrimary.value=value">
+                            oninput="rangePrimary.value=value">
                         {{/if}}
                         <div class="range-inner">
                             <label>$</label>
