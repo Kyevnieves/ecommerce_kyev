@@ -16,7 +16,7 @@ module.exports = {
     database: DB_DATABASE,
     ssl: {
       rejectUnauthorized: true,
-    }
+    },
   },
 };
 
