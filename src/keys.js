@@ -16,8 +16,8 @@ module.exports = {
     database: DB_DATABASE,
     ssl: {
       rejectUnauthorized: true,
-    },
-  },
+    }
+  }
 };
 
 // SSL CONFIG
