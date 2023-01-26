@@ -131,12 +131,13 @@ const viewEditarProducto = async (req, res) => {
 const editarProductoBD = async (req, res, next) => {
   const { id } = req.params;
   const { title, price, description, category } = req.body;
+  const fileNameCloudinary = title.replace(/ /g, "_");
   var image = null;
   if (req.file !== undefined) {
     const filePath = req.file.path;
     const urlImg = await cloudinary.v2.uploader.upload(
       filePath,
-      { public_id: "cloudinary" },
+      { public_id: fileNameCloudinary },
       function (error, result) {
         return result;
       }
