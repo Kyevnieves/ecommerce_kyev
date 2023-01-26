@@ -17,7 +17,7 @@ module.exports = {
     ssl: {
       rejectUnauthorized: true,
     }
-  }
+  },
 };
 
 // SSL CONFIG
