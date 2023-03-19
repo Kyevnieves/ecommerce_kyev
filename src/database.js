@@ -14,6 +14,7 @@ pool.getConnection((error, connection) => {
     if (error.code === "ECONNREFUSED") {
       console.log("Conexion rechazada");
     }
+    console.log(error);
   }
   if (connection) {
     connection.release();

@@ -1,6 +1,5 @@
 const pool = require("../database");
-const { cloud, cloudinary } = require("../lib/cloudinary");
-const { v4: uuidv4 } = require("uuid");
+
 const buscarPorTitulo = async (title) => {
   // CONVERSION PARA REALIZAR QUERY CORRECTAMENTE
   title = `%${title}%`;
@@ -22,25 +21,27 @@ const buscarPorTituloYCategoria = async (title, category) => {
   );
 };
 const buscarPorPrecio = async (price) => {
-  return await pool.query(`SELECT * FROM productos WHERE price <= ${price}`);
+  return await pool.query(`SELECT * FROM productos WHERE price <= ?`, [price]);
 };
 const buscarPorCategoriaYPrecio = async (category, price) => {
   return await pool.query(
-    `SELECT * FROM productos WHERE price <= ${price} && category = "${category}" `
+    `SELECT * FROM productos WHERE price <= ? && category = ?`,
+    [price, category]
   );
 };
 const priceMinpriceMax = async (pricemin, pricemax) => {
   return await pool.query(
-    `SELECT * FROM productos WHERE price BETWEEN ${pricemin} AND ${pricemax}`
+    `SELECT * FROM productos WHERE price BETWEEN ? AND ?;`,
+    [pricemin, pricemax]
   );
 };
+
 const shop = async (req, res, next) => {
   // OBTENER CATEGORIAS DE PRODUCTOS
   // let categorys = await pool.query("SELECT DISTINCT category FROM productos");
   let { price, category, title, pricemin, pricemax } = req.query;
-  console.log(pricemin, pricemax);
   // OBTENER LOS PRIMEROS 10 PRODUCTOS
-  let product = await pool.query(`SELECT * FROM productos WHERE id <=10`);
+  let product = await pool.query(`SELECT * FROM productos WHERE id <= 10`);
   let countCategorys = await pool.query(
     "SELECT category, COUNT(*) FROM productos GROUP BY category;"
   );
@@ -94,78 +95,11 @@ const obtenerProducto = async (req, res) => {
   ]);
   res.render("shop/view-product", { product });
 };
-const viewAgregarProducto = async (req, res) => {
-  res.render("shop/admin/add-product");
-};
-const agregarProductoBD = async (req, res) => {
-  const { title, price, description, category } = req.body;
-  const filePath = req.file.path;
-  const fileNameCloudinary = title.replace(/ /g, "_");
-  const urlImg = await cloudinary.v2.uploader.upload(
-    filePath,
-    { public_id: fileNameCloudinary },
-    function (error, result) {
-      return result;
-    }
-  );
-  const image = urlImg.url;
-  const newProduct = {
-    title,
-    price,
-    description,
-    image,
-    category,
-  };
-  const product = await pool.query("INSERT INTO productos set ?", [newProduct]);
-  const idProduct = product.insertId;
-  req.flash("success", "Producto creado exitosamente");
-  res.redirect(`/products/edit/${idProduct}`);
-};
-const viewEditarProducto = async (req, res) => {
-  let { id } = req.params;
-  const product = await pool.query("SELECT * FROM productos WHERE id = ?", [
-    id,
-  ]);
-  res.render("shop/admin/edit-product", { product });
-};
-const editarProductoBD = async (req, res, next) => {
-  const { id } = req.params;
-  const { title, price, description, category } = req.body;
-  const fileNameCloudinary = title.replace(/ /g, "_");
-  var image = null;
-  if (req.file !== undefined) {
-    const filePath = req.file.path;
-    const urlImg = await cloudinary.v2.uploader.upload(
-      filePath,
-      { public_id: fileNameCloudinary },
-      function (error, result) {
-        return result;
-      }
-    );
-    image = urlImg.url;
-  }
-  await pool.query(
-    "UPDATE productos SET title = IFNULL(?, title), price = IFNULL(?, price), description = IFNULL(?, description), category = IFNULL(?, category), image = IFNULL(?, image) WHERE id = ?",
-    [title, price, description, category, image, id]
-  );
-  req.flash("success", "Producto actualizado");
-  res.redirect(`/products/edit/${id}`);
-};
-const eliminarProducto = async (req, res) => {
-  const { id } = req.params;
-  await pool.query("DELETE FROM productos WHERE ID = ?", [id]);
-  req.flash("success", "Producto actualizado");
-  res.redirect("/shop");
-};
+
 module.exports = {
   carrito,
   checkout,
   shop,
   shopPage2,
   obtenerProducto,
-  viewAgregarProducto,
-  agregarProductoBD,
-  viewEditarProducto,
-  editarProductoBD,
-  eliminarProducto,
 };
